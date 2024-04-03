@@ -1,0 +1,145 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["dashboard", "external", "src", "cv", "run_dashboard", "submit", "train"]
+
+[project]
+name = "appoch"
+version = "0.0.1"
+authors = [
+    { name = "Emiel Witting", email = "emiel.witting@gmail.com" },
+    { name = "Hugo de Heer", email = "hugodeheer1234@gmail.com" },
+    { name = "Jasper van Selm", email = "jmvanselm@gmail.com" },
+    { name = "Jeffrey Lim", email = "jeffrey-lim@outlook.com" },
+    { name = "Tolga Kopar", email = "cahittolgakopar@gmail.com" },
+]
+description = "Team Epoch's base application for competing in machine learning competitions"
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    # Machine Learning Basics
+    "numpy>=1.26.2",
+    "pandas>=2.1.4",
+    "scipy>=1.11.4",
+    "tqdm>=4.66.1",
+    "polars>=0.19.19",
+    "epochalyst==0.2",
+
+    # Data loading
+    "pyarrow>=6.0.0",
+
+    # Visualizations
+    "seaborn>=0.13.0",
+    "matplotlib>=3.8.2",
+    "plotly>=5.18.0",
+
+    # PyTorch
+    "torch==2.1.2+cu118",
+    "torchaudio==2.1.2+cu118",
+    "torchvision==0.16.2+cu118",
+
+    # Dash
+    "dash>=2.14.2",
+    "dash-bootstrap-components>=1.5.0",
+    "dash-bootstrap-templates>=1.1.1",
+
+    # Pretrained Models
+    "segmentation-models-pytorch>=0.3.3",
+
+    # pre-commit & MyPy
+    "pre-commit>=3.6.0",
+    "mypy>=1.7.1",
+    "typing_extensions>=4.9.0",
+    "annotated-types>=0.6.0",
+    "pandas-stubs>=2.2.0.240218",
+    "traitlets>=5.14.2",
+
+    # Hydra
+    "hydra-core>=1.3.2",
+
+    # Weights & Biases
+    "wandb>=0.16.2",
+    "randomname>=0.2.1",
+
+    # Logging
+    "coloredlogs>=15.0.1",
+
+    # Notebooks
+    "notebook>=7.0.6",
+    "jupyter>=1.0.0",
+    "ipykernel>=6.27.1",
+
+    # Distribution
+    "distributed>=2024.3.1",
+
+]
+
+
+[tool.mypy]
+exclude = ["external/", "venv/", ".cache"]
+allow_untyped_calls = true
+disable_error_code = ["import-untyped"]
+
+[tool.ruff]
+extend-exclude = ["external/*"]
+line-length = 175
+fix = true
+show-fixes = true
+select = [
+    "ALL",  # Every check supported by Ruff
+]
+ignore = [
+    # pydocstyle (D)
+    "D203",  # 1 blank line required before class docstring
+    "D213",  # Multi-line docstring summary should start at the second line
+     # eradicate (ERA)
+    "ERA001",  # Found commented-out code
+    # Pylint (PL)
+    "PLR0913", # Too many arguments for function
+    "PLR2004",  # Magic value used in comparison, consider replacing with a constant variable
+    # flake8-annotations (ANN)
+    "ANN101",  # Missing type annotation for self in method
+    # flake8-errmsg (EM)
+    "EM101",  # Exception must not use a string literal, assign to variable first
+    "EM102",  # Exception must not use an f-string literal, assign to variable first
+    # flake8-future-annotations (FA)
+    "FA",  # Missing from __future__ import annotations
+    # flake8-fixme (FIX)
+    "FIX001",  # Line contains FIXME
+    "FIX002",  # Line contains TODO
+    "FIX003",  # Line contains XXX
+    "FIX004",  # Line contains HACK
+    # pep8-naming (N)
+    "N803",  # Argument name should be lowercase. Variable name "X" is very common in machine learning.
+    "N806",  # Variable in function should be lowercase. Variable name "X" is very common in machine learning.
+    # flake8-use-pathlib (PTH)
+    "PTH",  # Use pathlib instead of os.path. Dask does not seem to like pathlib.
+    # flake8-quotes (Q)
+    "Q000",  # Single quotes found but double quotes preferred
+    # flake8-simplify (SIM)
+    "SIM108",  # Use ternary operator instead of `if`-`else`-block
+    # flake8-type-checking (TCH)
+    "TCH001",  # Move application import into a type-checking block. Breaks Sphinx autodoc (https://github.com/sphinx-doc/sphinx/issues/11225).
+    "TCH002",  # Move third-party import into a type-checking block. Breaks Sphinx autodoc (https://github.com/sphinx-doc/sphinx/issues/11225).
+    "TCH003",  # Move standard library import into a type-checking block. Breaks Sphinx autodoc (https://github.com/sphinx-doc/sphinx/issues/11225).
+    # flake8-todos (TD)
+    "TD003",  # Missing issue link on the line following this TODO
+    # tryceratops (TRY)
+    "TRY003",  # Avoid specifying long messages outside the exception class
+]
+
+[tool.ruff.lint.isort]
+known-third-party = ["wandb"]
+
+
+[tool.ruff.format]
+docstring-code-format = true
+
+# allow unsused **kwargs of type Any
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true
+[tool.ruff.lint.flake8-unused-arguments]
+ignore-variadic-names = true
