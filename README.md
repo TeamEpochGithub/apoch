@@ -1,4 +1,4 @@
-# appoch
-Epoch base application for ml contests
+# Apoch
+Epoch's base application for participating in ML contests.
 
-Goal is to not have any jupyter notebooks in the base repository, these should only be added in copies or forks.
+Goal is to not have any Jupyter notebooks in the base repository, these should only be added in copies or forks.
