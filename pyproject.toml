@@ -6,15 +6,8 @@ build-backend = "setuptools.build_meta"
 py-modules = ["dashboard", "external", "src", "cv", "run_dashboard", "submit", "train"]
 
 [project]
-name = "appoch"
+name = "apoch"
 version = "0.0.1"
-authors = [
-    { name = "Emiel Witting", email = "emiel.witting@gmail.com" },
-    { name = "Hugo de Heer", email = "hugodeheer1234@gmail.com" },
-    { name = "Jasper van Selm", email = "jmvanselm@gmail.com" },
-    { name = "Jeffrey Lim", email = "jeffrey-lim@outlook.com" },
-    { name = "Tolga Kopar", email = "cahittolgakopar@gmail.com" },
-]
 description = "Team Epoch's base application for competing in machine learning competitions"
 license = { file = "LICENSE" }
 readme = "README.md"
