@@ -1,0 +1,12 @@
+defaults:
+  - base_submit
+  - hydra/logging
+  - model: ??? # Add models or ensembles
+
+# Use this when uploading to Kaggle
+
+###############
+#             #
+#    PATHS    #
+#             #
+###############
