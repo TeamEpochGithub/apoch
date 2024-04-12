@@ -10,3 +10,7 @@ defaults:
 #    PATHS    #
 #             #
 ###############
+
+result_path: /kaggle/working/
+
+# Local paths

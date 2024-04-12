@@ -9,6 +9,7 @@ defaults:
 #    PATHS    #
 #             #
 ###############
+processed_path: data/processed
 
 scorer:
   _target_: ??? # Add scorer
