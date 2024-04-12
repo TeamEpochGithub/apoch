@@ -124,6 +124,7 @@ def update_dependencies():
 
 
 def update_source():
+    """Update the source code dataset."""
     if os.path.exists(SOURCE_CODE_SAVE_PATH):
         shutil.rmtree(SOURCE_CODE_SAVE_PATH)
     os.mkdir(SOURCE_CODE_SAVE_PATH)
