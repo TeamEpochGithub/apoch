@@ -162,7 +162,7 @@ def update_source():
     shutil.rmtree(SOURCE_CODE_SAVE_PATH / "tmp")
 
     # # Copy dataset-metadata.json to submission
-    shutil.copy('dataset-metadata-source-code.json', SOURCE_CODE_SAVE_PATH / 'dataset-metadata.json')
+    shutil.copy('config/source.json', SOURCE_CODE_SAVE_PATH / 'dataset-metadata.json')
 
     print('Submission files saved to source_code')
 
