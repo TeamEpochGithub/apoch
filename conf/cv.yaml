@@ -1,0 +1,20 @@
+defaults:
+  - base_cv
+  - hydra/logging
+  - model: ??? # Add models or ensembles
+  - wandb: train
+
+###############
+#             #
+#    PATHS    #
+#             #
+###############
+processed_path: data/processed
+
+scorer:
+  _target_: ??? # Add scorer
+splitter:
+  _target_: ??? # Add splitter
+  n_splits: 10
+allow_multiple_instances: true
+save_folds: true
