@@ -17,10 +17,9 @@ from hydra.utils import instantiate
 from omegaconf import DictConfig
 
 from src.config.cross_validation_config import CVConfig
-from src.logging_utils.logger import logger
-from src.scoring.kldiv import KLDiv
-from src.typing.typing import XData
-from src.utils.script.lock import Lock
+from src.scoring.scorer import Scorer
+from src.utils.lock import Lock
+from src.utils.logger import logger
 from src.utils.seed_torch import set_torch_seed
 from src.utils.setup import load_training_data, setup_config, setup_data, setup_pipeline, setup_wandb
 
@@ -45,7 +44,6 @@ def run_cv(cfg: DictConfig) -> None:  # TODO(Jeffrey): Use CVConfig instead of D
 def run_cv_cfg(cfg: DictConfig) -> None:
     """Do cv on a model pipeline with K fold split."""
     print_section_separator("Q3 Detect Harmful Brain Activity - CV")
-    X: XData | None
     import coloredlogs
 
     coloredlogs.install()
@@ -126,12 +124,12 @@ def run_cv_cfg(cfg: DictConfig) -> None:
 
 def run_fold(
     fold_no: int,
-    X: XData,
+    X: npt.NDArray[np.float32],
     y: npt.NDArray[np.float32],
     train_indices: np.ndarray[Any, Any],
     test_indices: np.ndarray[Any, Any],
     cfg: DictConfig,
-    scorer: KLDiv,
+    scorer: Scorer,
     output_dir: Path,
     cache_args: dict[str, Any],
 ) -> tuple[float, float, float]:
