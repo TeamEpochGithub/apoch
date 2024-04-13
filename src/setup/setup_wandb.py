@@ -1,7 +1,10 @@
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 import wandb
 from src.utils.logger import logger
 from pathlib import Path
+import re
+from collections.abc import Callable
+from typing import cast
 
 
 def setup_wandb(
@@ -76,3 +79,18 @@ def setup_wandb(
 
     logger.info("Done initializing Weights & Biases")
     return run
+
+
+def replace_list_with_dict(o: object) -> object:
+    """Recursively replace lists with integer index dicts.
+
+    This is necessary for wandb to properly show any parameters in the config that are contained in a list.
+
+    :param o: Initially the dict, or any object recursively inside it.
+    """
+    if isinstance(o, dict):
+        for k, v in o.items():
+            o[k] = replace_list_with_dict(v)
+    elif isinstance(o, list):
+        o = {i: replace_list_with_dict(v) for i, v in enumerate(o)}
+    return o
