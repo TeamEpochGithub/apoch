@@ -49,9 +49,9 @@ def run_submit(cfg: DictConfig) -> None:
     predictions = model_pipeline.predict(X, **pred_args)
 
     # Make submission
+    raise NotImplementedError("Making submissions is different for each competition")
     if predictions is not None:
         # Create a dataframe from the predictions
-        raise NotImplementedError("Making submissions is different for each competition")
         submission = pd.dataframe()
 
         # Save submissions to path (Might be different for other platforms than Kaggle)

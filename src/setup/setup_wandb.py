@@ -1,3 +1,4 @@
+"""File containing functions related to setting up Weights and Biases."""
 import re
 from collections.abc import Callable
 from pathlib import Path
@@ -89,6 +90,7 @@ def replace_list_with_dict(o: object) -> object:
     This is necessary for wandb to properly show any parameters in the config that are contained in a list.
 
     :param o: Initially the dict, or any object recursively inside it.
+    :return: Integer index dict.
     """
     if isinstance(o, dict):
         for k, v in o.items():

@@ -1,3 +1,4 @@
+"""File containing functions related to setting up runtime arguments for pipelines."""
 from typing import Any
 
 from epochalyst.pipeline.ensemble import EnsemblePipeline
@@ -14,7 +15,17 @@ def setup_train_args(
     save_model: bool = False,
     save_model_preds: bool = False,
 ) -> dict[str, Any]:
-    # Initial
+    """Set train arguments for pipeline.
+
+    :param pipeline: Pipeline to receive arguments
+    :param cache_args: Caching arguments
+    :param train_indices: Train indices
+    :param test_indices: Test indices
+    :param fold: Fold number if it exists
+    :param save_model: Whether to save the model to File
+    :param save_model_preds: Whether to save the model predictions
+    :return: Dictionary containing arguments
+    """
     train_args = {
         "x_sys": {
             "cache_args": cache_args,
@@ -45,8 +56,11 @@ def setup_train_args(
 
 
 def setup_pred_args(pipeline: ModelPipeline | EnsemblePipeline) -> dict[str, Any]:
-    raise NotImplementedError("setup_pred_args is competition specific")
+    """Set train arguments for pipeline.
 
+    :param pipeline: Pipeline to receive arguments
+    :return: Dictionary containing arguments
+    """
     pred_args = {
         "train_sys": {
             "MainTrainer": {

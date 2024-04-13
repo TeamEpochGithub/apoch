@@ -1,3 +1,4 @@
+"""File containing functions related to setting up the pipeline."""
 from typing import Any, Enum
 
 from epochalyst.pipeline.ensemble import EnsemblePipeline
@@ -40,7 +41,12 @@ def setup_pipeline(cfg: DictConfig, *, is_train: bool = True) -> ModelPipeline |
     return model_pipeline
 
 
-def update_ensemble_cfg_dict(ensemble_cfg_dict: Any, test_size: float, *, is_train: bool) -> dict[str, Any]:
+def update_ensemble_cfg_dict(
+    ensemble_cfg_dict: dict[str | bytes | int | Enum | float | bool, Any] | list[Any] | str | None,
+    test_size: float,
+    *,
+    is_train: bool,
+) -> dict[str, Any]:
     """Update the ensemble_cfg_dict.
 
     :param ensemble_cfg_dict: The original ensemble_cfg_dict

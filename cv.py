@@ -110,7 +110,7 @@ def run_cv_cfg(cfg: DictConfig) -> None:
 
 def run_fold(
     fold_no: int,
-    X: Any,
+    X: Any,  # noqa: ANN401
     y: npt.NDArray[np.float32],
     train_indices: np.ndarray[Any, Any],
     test_indices: np.ndarray[Any, Any],
@@ -151,6 +151,9 @@ def run_fold(
 
     score = scorer(y[test_indices], predictions)
     logger.info(f"Score, fold {fold_no}: {score}")
+
+    fold_dir = output_dir / fold_no  # Something can be saved here
+    logger.debug(fold_dir)
 
     if wandb.run:
         wandb.log({f"Score_{fold_no}": score})
