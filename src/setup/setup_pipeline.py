@@ -1,9 +1,11 @@
-from src.utils.logger import logger
-from omegaconf import OmegaConf, DictConfig
-from hydra.utils import instantiate
+from typing import Any, Enum
+
 from epochalyst.pipeline.ensemble import EnsemblePipeline
 from epochalyst.pipeline.model.model import ModelPipeline
-from typing import Any, Enum
+from hydra.utils import instantiate
+from omegaconf import DictConfig, OmegaConf
+
+from src.utils.logger import logger
 
 
 def setup_pipeline(cfg: DictConfig, *, is_train: bool = True) -> ModelPipeline | EnsemblePipeline:

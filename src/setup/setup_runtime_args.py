@@ -1,4 +1,5 @@
 from typing import Any
+
 from epochalyst.pipeline.ensemble import EnsemblePipeline
 from epochalyst.pipeline.model.model import ModelPipeline
 
@@ -11,9 +12,8 @@ def setup_train_args(
     fold: int = -1,
     *,
     save_model: bool = False,
-    save_model_preds: bool = False
+    save_model_preds: bool = False,
 ) -> dict[str, Any]:
-
     # Initial
     train_args = {
         "x_sys": {
@@ -27,7 +27,7 @@ def setup_train_args(
             },
             # "cache_args": cache_args, # TODO(Jasper): Allow for caching after training in fold
         },
-        "pred_sys": {}
+        "pred_sys": {},
     }
 
     if fold > -1:

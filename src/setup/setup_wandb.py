@@ -1,10 +1,12 @@
-from omegaconf import DictConfig, OmegaConf
-import wandb
-from src.utils.logger import logger
-from pathlib import Path
 import re
 from collections.abc import Callable
+from pathlib import Path
 from typing import cast
+
+import wandb
+from omegaconf import DictConfig, OmegaConf
+
+from src.utils.logger import logger
 
 
 def setup_wandb(

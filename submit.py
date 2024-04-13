@@ -33,6 +33,7 @@ def run_submit(cfg: DictConfig) -> None:
 
     # Set up logging
     import coloredlogs
+
     coloredlogs.install()
 
     # Preload the pipeline

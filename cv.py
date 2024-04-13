@@ -17,13 +17,13 @@ from omegaconf import DictConfig
 
 from src.config.cross_validation_config import CVConfig
 from src.scoring.scorer import Scorer
-from src.utils.logger import logger
-from src.utils.lock import Lock
-from src.utils.set_torch_seed import set_torch_seed
-from src.setup.setup_data import setup_train_x_data, setup_train_y_data, setup_splitter_data
+from src.setup.setup_data import setup_splitter_data, setup_train_x_data, setup_train_y_data
 from src.setup.setup_pipeline import setup_pipeline
-from src.setup.setup_wandb import setup_wandb
 from src.setup.setup_runtime_args import setup_train_args
+from src.setup.setup_wandb import setup_wandb
+from src.utils.lock import Lock
+from src.utils.logger import logger
+from src.utils.set_torch_seed import set_torch_seed
 
 warnings.filterwarnings("ignore", category=UserWarning)
 # Makes hydra give full error messages
@@ -47,6 +47,7 @@ def run_cv_cfg(cfg: DictConfig) -> None:
     print_section_separator("Q3 Detect Harmful Brain Activity - CV")
 
     import coloredlogs
+
     coloredlogs.install()
 
     # Set seed
@@ -138,8 +139,14 @@ def run_fold(
     logger.info("Creating clean pipeline for this fold")
     model_pipeline = setup_pipeline(cfg)
 
-    train_args = setup_train_args(pipeline=model_pipeline, cache_args=cache_args, train_indices=train_indices,
-                                  test_indices=test_indices, fold=fold_no, save_model=cfg.save_folds)
+    train_args = setup_train_args(
+        pipeline=model_pipeline,
+        cache_args=cache_args,
+        train_indices=train_indices,
+        test_indices=test_indices,
+        fold=fold_no,
+        save_model=cfg.save_folds,
+    )
     predictions, _ = model_pipeline.train(X, y, **train_args)
 
     score = scorer(y[test_indices], predictions)

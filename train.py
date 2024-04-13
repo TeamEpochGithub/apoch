@@ -12,13 +12,13 @@ from hydra.utils import instantiate
 from omegaconf import DictConfig
 
 from src.config.train_config import TrainConfig
-from src.utils.logger import logger
-from src.utils.lock import Lock
-from src.utils.set_torch_seed import set_torch_seed
-from src.setup.setup_data import setup_train_x_data, setup_train_y_data, setup_splitter_data
+from src.setup.setup_data import setup_splitter_data, setup_train_x_data, setup_train_y_data
 from src.setup.setup_pipeline import setup_pipeline
-from src.setup.setup_wandb import setup_wandb
 from src.setup.setup_runtime_args import setup_train_args
+from src.setup.setup_wandb import setup_wandb
+from src.utils.lock import Lock
+from src.utils.logger import logger
+from src.utils.set_torch_seed import set_torch_seed
 
 warnings.filterwarnings("ignore", category=UserWarning)
 # Makes hydra give full error messages
@@ -42,6 +42,7 @@ def run_train_cfg(cfg: DictConfig) -> None:
     print_section_separator("Q3 Detect Harmful Brain Activity - Training")
 
     import coloredlogs
+
     coloredlogs.install()
 
     # Set seed
