@@ -1,1 +1,1 @@
-""" Contains utility functions for the competition. """
+"""Module containing files with utility functions."""

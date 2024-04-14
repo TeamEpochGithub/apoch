@@ -10,10 +10,10 @@ from hydra.core.config_store import ConfigStore
 from omegaconf import DictConfig
 
 from src.config.submit_config import SubmitConfig
-from src.utils.logger import logger
 from src.setup.setup_data import setup_inference_data
 from src.setup.setup_pipeline import setup_pipeline
 from src.setup.setup_runtime_args import setup_pred_args
+from src.utils.logger import logger
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -33,6 +33,7 @@ def run_submit(cfg: DictConfig) -> None:
 
     # Set up logging
     import coloredlogs
+
     coloredlogs.install()
 
     # Preload the pipeline
@@ -48,9 +49,9 @@ def run_submit(cfg: DictConfig) -> None:
     predictions = model_pipeline.predict(X, **pred_args)
 
     # Make submission
+    raise NotImplementedError("Making submissions is different for each competition")
     if predictions is not None:
         # Create a dataframe from the predictions
-        raise NotImplementedError("Making submissions is different for each competition")
         submission = pd.dataframe()
 
         # Save submissions to path (Might be different for other platforms than Kaggle)

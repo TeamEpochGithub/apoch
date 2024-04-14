@@ -1,1 +1,1 @@
-"""Modules related to training. """
+"""Module containing training blocks and modules for pipeline."""

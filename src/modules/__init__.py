@@ -1,1 +1,1 @@
-"""Modules for processing data and training models"""
+"""Modules for processing data and training models."""

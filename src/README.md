@@ -15,4 +15,3 @@ The `src` folder is organized as follows:
 - `setup`: Contains the setup files for the competition.
 - `typing`: Contains common type definitions for the competition.
 - `utils`: Contains utility functions for the competition.
-
