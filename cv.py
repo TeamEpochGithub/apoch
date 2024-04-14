@@ -15,7 +15,7 @@ from hydra.core.config_store import ConfigStore
 from hydra.utils import instantiate
 from omegaconf import DictConfig
 
-from src.config.cross_validation_config import CVConfig
+from src.config.cv_config import CVConfig
 from src.scoring.scorer import Scorer
 from src.utils.logger import logger
 from src.utils.lock import Lock

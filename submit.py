@@ -10,7 +10,7 @@ from hydra.core.config_store import ConfigStore
 from omegaconf import DictConfig
 
 from src.config.submit_config import SubmitConfig
-from src.logging_utils.logger import logger
+from src.utils.logger import logger
 from src.setup.setup_data import setup_inference_data
 from src.setup.setup_pipeline import setup_pipeline
 from src.setup.setup_runtime_args import setup_pred_args
