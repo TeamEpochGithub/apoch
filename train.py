@@ -5,20 +5,20 @@ from contextlib import nullcontext
 from pathlib import Path
 
 import hydra
-import numpy as np
 import wandb
 from epochalyst.logging.section_separator import print_section_separator
-from epochalyst.pipeline.ensemble import EnsemblePipeline
 from hydra.core.config_store import ConfigStore
 from hydra.utils import instantiate
 from omegaconf import DictConfig
-from sklearn.model_selection import train_test_split
 
 from src.config.train_config import TrainConfig
-from src.logging_utils.logger import logger
-from src.utils.script.lock import Lock
-from src.utils.seed_torch import set_torch_seed
-from src.utils.setup import load_training_data, setup_config, setup_data, setup_pipeline, setup_wandb
+from src.utils.logger import logger
+from src.utils.lock import Lock
+from src.utils.set_torch_seed import set_torch_seed
+from src.setup.setup_data import setup_train_x_data, setup_train_y_data, setup_splitter_data
+from src.setup.setup_pipeline import setup_pipeline
+from src.setup.setup_wandb import setup_wandb
+from src.setup.setup_runtime_args import setup_train_args
 
 warnings.filterwarnings("ignore", category=UserWarning)
 # Makes hydra give full error messages
@@ -31,7 +31,7 @@ cs.store(name="base_train", node=TrainConfig)
 @hydra.main(version_base=None, config_path="conf", config_name="train")
 def run_train(cfg: DictConfig) -> None:
     """Train a model pipeline with a train-test split. Entry point for Hydra which loads the config file."""
-    # Run the train config with a dask client, and optionally a lock
+    # Run the train config with an optional lock
     optional_lock = Lock if not cfg.allow_multiple_instances else nullcontext
     with optional_lock():
         run_train_cfg(cfg)
@@ -40,14 +40,14 @@ def run_train(cfg: DictConfig) -> None:
 def run_train_cfg(cfg: DictConfig) -> None:
     """Train a model pipeline with a train-test split."""
     print_section_separator("Q3 Detect Harmful Brain Activity - Training")
-    set_torch_seed()
 
     import coloredlogs
-
     coloredlogs.install()
 
-    # Check for missing keys in the config file
-    setup_config(cfg)
+    # Set seed
+    set_torch_seed()
+
+    # Get output directory
     output_dir = Path(hydra.core.hydra_config.HydraConfig.get().runtime.output_dir)
 
     if cfg.wandb.enabled:
@@ -70,68 +70,31 @@ def run_train_cfg(cfg: DictConfig) -> None:
     x_cache_exists = model_pipeline.get_x_cache_exists(cache_args)
     y_cache_exists = model_pipeline.get_y_cache_exists(cache_args)
 
-    X, y = load_training_data(
-        metadata_path=cfg.metadata_path,
-        eeg_path=cfg.eeg_path,
-        spectrogram_path=cfg.spectrogram_path,
-        cache_path=cfg.cache_path,
-        x_cache_exists=x_cache_exists,
-        y_cache_exists=y_cache_exists,
-    )
+    X, y = None, None
+    if not x_cache_exists:
+        X = setup_train_x_data()
 
-    if y is None:
-        raise ValueError("No labels loaded to train with")
-
-    # If cache exists, need to read the meta data for the splitter
-    if X is not None:
-        splitter_data = X.meta
-    else:
-        X, _ = setup_data(cfg.metadata_path, None, None)
-        splitter_data = X.meta
+    if not y_cache_exists:
+        y = setup_train_y_data()
 
     # Split indices into train and test
-    indices = np.arange(len(y))
-    if cfg.test_size == 0:
-        train_indices, test_indices = list(indices), []  # type: ignore[var-annotated]
-    elif cfg.splitter is not None:
-        logger.info("Using stratified splitter to split data into train and test sets.")
-        train_indices, test_indices = instantiate(cfg.splitter).split(splitter_data, y)[0]
-    else:
-        logger.info("Using train_test_split to split data into train and test sets.")
-        train_indices, test_indices = train_test_split(indices, test_size=cfg.test_size, random_state=42)
-
+    splitter_data = setup_splitter_data()
+    logger.info("Using stratified splitter to split data into train and test sets.")
+    train_indices, test_indices = instantiate(cfg.splitter).split(splitter_data, y)[0]
     logger.info(f"Train/Test size: {len(train_indices)}/{len(test_indices)}")
 
     print_section_separator("Train model pipeline")
-    train_args = {
-        "x_sys": {
-            "cache_args": cache_args,
-        },
-        "train_sys": {
-            "MainTrainer": {
-                "train_indices": train_indices,
-                "test_indices": test_indices,
-            },
-            "cache_args": cache_args,
-        },
-    }
-    if isinstance(model_pipeline, EnsemblePipeline):
-        train_args = {
-            "ModelPipeline": train_args,
-        }
+    train_args = setup_train_args(pipeline=model_pipeline, cache_args=cache_args, train_indices=train_indices, test_indices=test_indices, save_model=True)
     predictions, _ = model_pipeline.train(X, y, **train_args)
 
     if len(test_indices) > 0:
         print_section_separator("Scoring")
         scorer = instantiate(cfg.scorer)
-        score = scorer(y[test_indices], predictions, metadata=X.meta.iloc[test_indices, :])
-        accuracy, f1 = scorer.visualize_preds(y[test_indices], predictions, output_folder=output_dir)
-        logger.info(f"Accuracy: {accuracy}")
-        logger.info(f"F1: {f1}")
+        score = scorer(y[test_indices], predictions)
         logger.info(f"Score: {score}")
 
         if wandb.run:
-            wandb.log({"Accuracy": accuracy, "F1": f1, "Score": score})
+            wandb.log({"Score": score})
 
     wandb.finish()
 
