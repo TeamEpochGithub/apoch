@@ -17,6 +17,8 @@ class SubmitConfig:
     model: Any
     ensemble: Any
     post_ensemble: Any
-    raw_data_path: str
-    raw_target_path: str
+    raw_path: str
+    cache_path: str
+    data_path: str
+    processed_path: str
     result_path: str

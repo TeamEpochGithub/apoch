@@ -26,10 +26,6 @@ def setup_train_args(
     :param save_model_preds: Whether to save the model predictions
     :return: Dictionary containing arguments
     """
-    x_sys = {
-        "cache_args": cache_args,
-    }
-
     main_trainer = {
         "train_indices": train_indices,
         "test_indices": test_indices,
@@ -46,12 +42,17 @@ def setup_train_args(
     if save_model_preds:
         train_sys["cache_args"] = cache_args
 
-    pred_sys: dict[str, Any] = {}
-
     train_args = {
-        "x_sys": x_sys,
-        "train_sys": train_sys,
-        "pred_sys": pred_sys,
+        "x_sys": {
+            "cache_args": cache_args,
+        },
+        "y_sys": {},
+        "train_sys": {
+            "DummyTrainer": {
+                "train_indices": train_indices,
+                "test_indices": test_indices,
+            },
+        },
     }
 
     if isinstance(pipeline, EnsemblePipeline):
@@ -59,7 +60,7 @@ def setup_train_args(
             "ModelPipeline": train_args,
         }
 
-    raise NotImplementedError("setup_train_args is competition specific")
+    return train_args
 
 
 def setup_pred_args(pipeline: ModelPipeline | EnsemblePipeline) -> dict[str, Any]:
