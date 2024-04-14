@@ -1,0 +1,19 @@
+defaults:
+  - base_train
+  - hydra/logging
+  - model: test # Add models or ensembles
+  - wandb: train
+
+###############
+#             #
+#    PATHS    #
+#             #
+###############
+processed_path: data/processed
+
+scorer:
+  _target_: ??? # Add scorer
+splitter:
+  _target_: ??? # Add splitter
+  n_splits: 10
+allow_multiple_instances: true

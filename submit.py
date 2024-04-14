@@ -6,13 +6,14 @@ from pathlib import Path
 import hydra
 import pandas as pd
 from epochalyst.logging.section_separator import print_section_separator
-from epochalyst.pipeline.ensemble import EnsemblePipeline
 from hydra.core.config_store import ConfigStore
 from omegaconf import DictConfig
 
 from src.config.submit_config import SubmitConfig
-from src.logging_utils.logger import logger
-from src.utils.setup import setup_config, setup_data, setup_pipeline
+from src.utils.logger import logger
+from src.setup.setup_data import setup_inference_data
+from src.setup.setup_pipeline import setup_pipeline
+from src.setup.setup_runtime_args import setup_pred_args
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -28,56 +29,31 @@ cs.store(name="base_submit", node=SubmitConfig)
 # TODO(Epoch): Use SubmitConfig instead of DictConfig
 def run_submit(cfg: DictConfig) -> None:
     """Run the main script for submitting the predictions."""
-    print_section_separator("Q3 Detect Harmful Brain Activity - Submit")
+    print_section_separator("Q? - 'competition' - Submit")
 
     # Set up logging
     import coloredlogs
-
     coloredlogs.install()
-
-    # Check for missing keys in the config file
-    setup_config(cfg)
 
     # Preload the pipeline
     print_section_separator("Setup pipeline")
-    model_pipeline = setup_pipeline(cfg)
+    model_pipeline = setup_pipeline(cfg, is_train=False)
 
     # Load the test data
-    eeg_path = Path(cfg.eeg_path)
-    spectrogram_path = Path(cfg.spectrogram_path)
-    metadata_path = Path(cfg.metadata_path)
-    X, _ = setup_data(metadata_path, eeg_path, spectrogram_path, use_test_data=True)
+    X = setup_inference_data()
 
     # Predict on the test data
     logger.info("Making predictions...")
-
-    pred_args = {
-        "train_sys": {
-            "MainTrainer": {
-                "batch_size": 16,
-                "model_folds": cfg.model_folds,
-            },
-        },
-    }
-    if isinstance(model_pipeline, EnsemblePipeline):
-        pred_args = {
-            "ModelPipeline": pred_args,
-        }
+    pred_args = setup_pred_args(pipeline=model_pipeline)
     predictions = model_pipeline.predict(X, **pred_args)
 
     # Make submission
     if predictions is not None:
         # Create a dataframe from the predictions
-        label_columns = ["seizure_vote", "lpd_vote", "gpd_vote", "lrda_vote", "grda_vote", "other_vote"]
-        submission = pd.DataFrame(predictions, columns=label_columns)
+        raise NotImplementedError("Making submissions is different for each competition")
+        submission = pd.dataframe()
 
-        # Add the eeg_id to the submission
-        submission["eeg_id"] = X.meta["eeg_id"]
-
-        # Reorder the columns
-        submission = submission[["eeg_id", *label_columns]]
-
-        # Save the submission
+        # Save submissions to path (Might be different for other platforms than Kaggle)
         result_path = Path(cfg.result_path)
         os.makedirs(result_path, exist_ok=True)
         submission_path = result_path / "submission.csv"

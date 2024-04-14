@@ -1,0 +1,14 @@
+# Ignore Everything
+*
+
+# Whitelist src files and hydra configs
+!src/
+!conf/
+!train.py
+!sweep.py
+!submit.py
+!cv.py
+
+# Whitelist project dependencies
+!requirements.txt
+!pyproject.toml

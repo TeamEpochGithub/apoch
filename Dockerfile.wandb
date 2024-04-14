@@ -1,0 +1,33 @@
+FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu20.04
+
+ENV WANDB_API_KEY="2f2e070293bc25b777c07b41702df746bdc4cc7d"
+
+RUN apt-get update --yes --quiet\
+    && DEBIAN_FRONTEND=noninteractive apt-get install --yes --quiet --no-install-recommends \
+        software-properties-common \
+        build-essential apt-utils \
+        wget curl vim git ca-certificates kmod \
+        nvidia-driver-525 \
+    && add-apt-repository --yes ppa:deadsnakes/ppa \
+    && DEBIAN_FRONTEND=noninteractive apt-get install --yes --quiet --no-install-recommends \
+        python3.10 \
+        python3.10-dev \
+        python3.10-distutils \
+        python3.10-lib2to3 \
+        python3.10-gdbm \
+        python3.10-tk \
+        pip \
+    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 999 \
+    && update-alternatives --config python3 && ln -s /usr/bin/python3 /usr/bin/python \
+    && curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python Dependencies
+WORKDIR /app
+COPY requirements.txt pyproject.toml ./
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install --no-cache-dir -r requirements.txt
+
+# Copy Codebase
+COPY . .
