@@ -29,7 +29,7 @@ cs.store(name="base_submit", node=SubmitConfig)
 # TODO(Epoch): Use SubmitConfig instead of DictConfig
 def run_submit(cfg: DictConfig) -> None:
     """Run the main script for submitting the predictions."""
-    print_section_separator("Q3 Detect Harmful Brain Activity - Submit")
+    print_section_separator("Q? - 'competition' - Submit")
 
     # Set up logging
     import coloredlogs
