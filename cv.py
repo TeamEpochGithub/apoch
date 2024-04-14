@@ -44,7 +44,7 @@ def run_cv(cfg: DictConfig) -> None:  # TODO(Jeffrey): Use CVConfig instead of D
 
 def run_cv_cfg(cfg: DictConfig) -> None:
     """Do cv on a model pipeline with K fold split."""
-    print_section_separator("Q3 Detect Harmful Brain Activity - CV")
+    print_section_separator("Q? - 'competition' - CV")
 
     import coloredlogs
     coloredlogs.install()
@@ -90,7 +90,7 @@ def run_cv_cfg(cfg: DictConfig) -> None:
 
     # Split indices into train and test
     splitter_data = setup_splitter_data()
-    logger.info("Using stratified splitter to split data into train and test sets.")
+    logger.info("Using splitter to split data into train and test sets.")
 
     for fold_no, (train_indices, test_indices) in enumerate(instantiate(cfg.splitter).split(splitter_data, y)):
         score, accuracy, f1 = run_fold(fold_no, X, y, train_indices, test_indices, cfg, scorer, output_dir, cache_args)

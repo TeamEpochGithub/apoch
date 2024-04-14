@@ -39,7 +39,7 @@ def run_train(cfg: DictConfig) -> None:
 
 def run_train_cfg(cfg: DictConfig) -> None:
     """Train a model pipeline with a train-test split."""
-    print_section_separator("Q3 Detect Harmful Brain Activity - Training")
+    print_section_separator("Q? - 'competition' - Training")
 
     import coloredlogs
     coloredlogs.install()
@@ -79,7 +79,7 @@ def run_train_cfg(cfg: DictConfig) -> None:
 
     # Split indices into train and test
     splitter_data = setup_splitter_data()
-    logger.info("Using stratified splitter to split data into train and test sets.")
+    logger.info("Using splitter to split data into train and test sets.")
     train_indices, test_indices = instantiate(cfg.splitter).split(splitter_data, y)[0]
     logger.info(f"Train/Test size: {len(train_indices)}/{len(test_indices)}")
 
