@@ -1,4 +1,4 @@
-if __name__ =="__main__":
+if __name__ == "__main__":
     import numpy as np
 
     # Generating linearly separable data
@@ -21,8 +21,8 @@ if __name__ =="__main__":
     data = np.vstack((data1, data2))
     labels = np.vstack((labels1, labels2))
     dataset = np.hstack((data, labels))
-    np.save('train_data/dummy.npy', dataset)
 
+    # Shuffling the dataset
+    np.random.shuffle(dataset)
 
-
-
+    np.save("train_data/dummy.npy", dataset)
