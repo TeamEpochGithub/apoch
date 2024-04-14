@@ -41,7 +41,7 @@ def run_submit(cfg: DictConfig) -> None:
     model_pipeline = setup_pipeline(cfg, is_train=False)
 
     # Load the test data
-    X = setup_inference_data()
+    X = setup_inference_data(cfg.data_path)
 
     # Predict on the test data
     logger.info("Making predictions...")
@@ -49,10 +49,9 @@ def run_submit(cfg: DictConfig) -> None:
     predictions = model_pipeline.predict(X, **pred_args)
 
     # Make submission
-    raise NotImplementedError("Making submissions is different for each competition")
     if predictions is not None:
         # Create a dataframe from the predictions
-        submission = pd.dataframe()
+        submission = pd.DataFrame(predictions)
 
         # Save submissions to path (Might be different for other platforms than Kaggle)
         result_path = Path(cfg.result_path)
