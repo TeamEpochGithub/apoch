@@ -4,7 +4,7 @@ import sys
 import time
 from types import TracebackType
 
-from src.logging_utils.logger import logger
+from src.utils.logger import logger
 
 if sys.version_info < (3, 11):  # Self was added in Python 3.11
     from typing import Literal
