@@ -1,10 +1,13 @@
-from omegaconf import DictConfig, OmegaConf
-import wandb
-from src.utils.logger import logger
-from pathlib import Path
+"""File containing functions related to setting up Weights and Biases."""
 import re
 from collections.abc import Callable
+from pathlib import Path
 from typing import cast
+
+import wandb
+from omegaconf import DictConfig, OmegaConf
+
+from src.utils.logger import logger
 
 
 def setup_wandb(
@@ -92,6 +95,7 @@ def replace_list_with_dict(o: object) -> object:
     This is necessary for wandb to properly show any parameters in the config that are contained in a list.
 
     :param o: Initially the dict, or any object recursively inside it.
+    :return: Integer index dict.
     """
     if isinstance(o, dict):
         for k, v in o.items():

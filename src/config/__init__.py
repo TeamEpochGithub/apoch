@@ -1,1 +1,1 @@
-"""The types of the configuration files."""
+"""Module containing the types of configuration files."""

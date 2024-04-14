@@ -7,7 +7,6 @@ from typing import Any
 
 import hydra
 import numpy as np
-import numpy.typing as npt
 import randomname
 import wandb
 from epochalyst.logging.section_separator import print_section_separator
@@ -17,13 +16,13 @@ from omegaconf import DictConfig
 
 from src.config.cv_config import CVConfig
 from src.scoring.scorer import Scorer
-from src.utils.logger import logger
-from src.utils.lock import Lock
-from src.utils.set_torch_seed import set_torch_seed
-from src.setup.setup_data import setup_train_x_data, setup_train_y_data, setup_splitter_data
+from src.setup.setup_data import setup_splitter_data, setup_train_x_data, setup_train_y_data
 from src.setup.setup_pipeline import setup_pipeline
-from src.setup.setup_wandb import setup_wandb
 from src.setup.setup_runtime_args import setup_train_args
+from src.setup.setup_wandb import setup_wandb
+from src.utils.lock import Lock
+from src.utils.logger import logger
+from src.utils.set_torch_seed import set_torch_seed
 
 warnings.filterwarnings("ignore", category=UserWarning)
 # Makes hydra give full error messages
@@ -47,6 +46,7 @@ def run_cv_cfg(cfg: DictConfig) -> None:
     print_section_separator("Q? - 'competition' - CV")
 
     import coloredlogs
+
     coloredlogs.install()
 
     # Set seed
@@ -93,7 +93,7 @@ def run_cv_cfg(cfg: DictConfig) -> None:
     logger.info("Using splitter to split data into train and test sets.")
 
     for fold_no, (train_indices, test_indices) in enumerate(instantiate(cfg.splitter).split(splitter_data, y)):
-        score, accuracy, f1 = run_fold(fold_no, X, y, train_indices, test_indices, cfg, scorer, output_dir, cache_args)
+        score = run_fold(fold_no, X, y, train_indices, test_indices, cfg, scorer, output_dir, cache_args)
         scores.append(score)
         if score > 0.85:
             break
@@ -109,15 +109,15 @@ def run_cv_cfg(cfg: DictConfig) -> None:
 
 def run_fold(
     fold_no: int,
-    X: Any,
-    y: npt.NDArray[np.float32],
-    train_indices: np.ndarray[Any, Any],
-    test_indices: np.ndarray[Any, Any],
+    X: Any,  # noqa: ANN401
+    y: Any,  # noqa: ANN401
+    train_indices: list[int],
+    test_indices: list[int],
     cfg: DictConfig,
     scorer: Scorer,
     output_dir: Path,
     cache_args: dict[str, Any],
-) -> tuple[float, float, float]:
+) -> float:
     """Run a single fold of the cross validation.
 
     :param i: The fold number.
@@ -138,12 +138,21 @@ def run_fold(
     logger.info("Creating clean pipeline for this fold")
     model_pipeline = setup_pipeline(cfg)
 
-    train_args = setup_train_args(pipeline=model_pipeline, cache_args=cache_args, train_indices=train_indices,
-                                  test_indices=test_indices, fold=fold_no, save_model=cfg.save_folds)
+    train_args = setup_train_args(
+        pipeline=model_pipeline,
+        cache_args=cache_args,
+        train_indices=train_indices,
+        test_indices=test_indices,
+        fold=fold_no,
+        save_model=cfg.save_folds,
+    )
     predictions, _ = model_pipeline.train(X, y, **train_args)
 
     score = scorer(y[test_indices], predictions)
     logger.info(f"Score, fold {fold_no}: {score}")
+
+    fold_dir = output_dir / str(fold_no)  # Something can be saved here
+    logger.debug(fold_dir)
 
     if wandb.run:
         wandb.log({f"Score_{fold_no}": score})

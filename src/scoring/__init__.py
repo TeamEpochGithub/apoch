@@ -1,1 +1,1 @@
-"""Contains scorer functions for the model evaluation."""
+"""Module containing scoring classes extended from Scorer."""
