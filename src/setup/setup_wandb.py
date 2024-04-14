@@ -24,10 +24,15 @@ def setup_wandb(
     """
     logger.debug("Initializing Weights & Biases")
 
+    project_name = "???"
+
+    if project_name == "???":
+        raise ValueError("Please set the project name in setup_wandb.py")
+
     config = OmegaConf.to_container(cfg, resolve=True)
     run = wandb.init(
         config=replace_list_with_dict(config),  # type: ignore[arg-type]
-        project="detect-harmful-brain-activity",
+        project=project_name,
         entity="team-epoch-iv",
         name=name,
         group=group,

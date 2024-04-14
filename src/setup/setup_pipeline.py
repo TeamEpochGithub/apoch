@@ -3,7 +3,7 @@ from omegaconf import OmegaConf, DictConfig
 from hydra.utils import instantiate
 from epochalyst.pipeline.ensemble import EnsemblePipeline
 from epochalyst.pipeline.model.model import ModelPipeline
-from typing import Any, Enum
+from typing import Any
 
 
 def setup_pipeline(cfg: DictConfig, *, is_train: bool = True) -> ModelPipeline | EnsemblePipeline:
@@ -57,9 +57,9 @@ def update_ensemble_cfg_dict(ensemble_cfg_dict: Any, test_size: float, *, is_tra
 
 
 def update_model_cfg_test_size(
-    cfg: dict[str | bytes | int | Enum | float | bool, Any] | list[Any] | str | None,
+    cfg: dict[str | bytes | int | float | bool, Any] | list[Any] | str | None,
     test_size: float = -1.0,
-) -> dict[str | bytes | int | Enum | float | bool, Any] | list[Any] | str | None:
+) -> dict[str | bytes | int | float | bool, Any] | list[Any] | str | None:
     """Update the test size in the model config.
 
     :param cfg: The model config.
