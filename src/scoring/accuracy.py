@@ -23,8 +23,7 @@ class Accuracy(Scorer):
         y_pred[y_pred < 0.5] = 0
 
         # Calculate the accuracy
-        accuracy = np.mean(y_true == y_pred)
-        return accuracy
+        return np.mean(y_true == y_pred)
 
     def __str__(self) -> str:
         """Return the name of the scorer."""
