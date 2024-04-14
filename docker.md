@@ -72,7 +72,7 @@ mv data/raw .
 
 ```shell
 docker run --gpus <all | '"device=0,1"'> -v <project-path>/data:/app/data <PROJECT_NAME>
-docker run -it --rm --gpus all -v ~/competitions/q3-harmful-brain-activity/data:/app/data <PROJECT_NAME>:latest
+docker run -it --rm --gpus all -v ~/competitions/<PROJECT_NAME>/data:/app/data <PROJECT_NAME>:latest
 ```
 
 ### Windows

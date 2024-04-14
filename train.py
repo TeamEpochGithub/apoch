@@ -12,13 +12,13 @@ from hydra.utils import instantiate
 from omegaconf import DictConfig
 
 from src.config.train_config import TrainConfig
-from src.utils.logger import logger
-from src.utils.lock import Lock
-from src.utils.set_torch_seed import set_torch_seed
-from src.setup.setup_data import setup_train_x_data, setup_train_y_data, setup_splitter_data
+from src.setup.setup_data import setup_splitter_data, setup_train_x_data, setup_train_y_data
 from src.setup.setup_pipeline import setup_pipeline
-from src.setup.setup_wandb import setup_wandb
 from src.setup.setup_runtime_args import setup_train_args
+from src.setup.setup_wandb import setup_wandb
+from src.utils.lock import Lock
+from src.utils.logger import logger
+from src.utils.set_torch_seed import set_torch_seed
 
 warnings.filterwarnings("ignore", category=UserWarning)
 # Makes hydra give full error messages
@@ -39,9 +39,10 @@ def run_train(cfg: DictConfig) -> None:
 
 def run_train_cfg(cfg: DictConfig) -> None:
     """Train a model pipeline with a train-test split."""
-    print_section_separator("Q3 Detect Harmful Brain Activity - Training")
+    print_section_separator("Q? - 'competition' - Training")
 
     import coloredlogs
+
     coloredlogs.install()
 
     # Set seed
@@ -79,13 +80,16 @@ def run_train_cfg(cfg: DictConfig) -> None:
 
     # Split indices into train and test
     splitter_data = setup_splitter_data()
-    logger.info("Using stratified splitter to split data into train and test sets.")
+    logger.info("Using splitter to split data into train and test sets.")
     train_indices, test_indices = instantiate(cfg.splitter).split(splitter_data, y)[0]
     logger.info(f"Train/Test size: {len(train_indices)}/{len(test_indices)}")
 
     print_section_separator("Train model pipeline")
     train_args = setup_train_args(pipeline=model_pipeline, cache_args=cache_args, train_indices=train_indices, test_indices=test_indices, save_model=True)
-    predictions, _ = model_pipeline.train(X, y, **train_args)
+    predictions, y_new = model_pipeline.train(X, y, **train_args)
+
+    if y is None:
+        y = y_new
 
     if len(test_indices) > 0:
         print_section_separator("Scoring")

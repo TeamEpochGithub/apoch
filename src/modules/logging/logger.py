@@ -4,7 +4,7 @@ from typing import Any
 import wandb
 from epochalyst._core._logging._logger import _Logger
 
-from src.logging_utils.logger import logger
+from src.utils.logger import logger
 
 
 class Logger(_Logger):
