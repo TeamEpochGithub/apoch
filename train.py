@@ -86,7 +86,10 @@ def run_train_cfg(cfg: DictConfig) -> None:
 
     print_section_separator("Train model pipeline")
     train_args = setup_train_args(pipeline=model_pipeline, cache_args=cache_args, train_indices=train_indices, test_indices=test_indices, save_model=True)
-    predictions, _ = model_pipeline.train(X, y, **train_args)
+    predictions, y_new = model_pipeline.train(X, y, **train_args)
+
+    if y is None:
+        y = y_new
 
     if len(test_indices) > 0:
         print_section_separator("Scoring")

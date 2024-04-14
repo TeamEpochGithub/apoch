@@ -7,7 +7,6 @@ from typing import Any
 
 import hydra
 import numpy as np
-import numpy.typing as npt
 import randomname
 import wandb
 from epochalyst.logging.section_separator import print_section_separator
@@ -94,7 +93,7 @@ def run_cv_cfg(cfg: DictConfig) -> None:
     logger.info("Using splitter to split data into train and test sets.")
 
     for fold_no, (train_indices, test_indices) in enumerate(instantiate(cfg.splitter).split(splitter_data, y)):
-        score, accuracy, f1 = run_fold(fold_no, X, y, train_indices, test_indices, cfg, scorer, output_dir, cache_args)
+        score = run_fold(fold_no, X, y, train_indices, test_indices, cfg, scorer, output_dir, cache_args)
         scores.append(score)
         if score > 0.85:
             break
@@ -111,14 +110,14 @@ def run_cv_cfg(cfg: DictConfig) -> None:
 def run_fold(
     fold_no: int,
     X: Any,  # noqa: ANN401
-    y: npt.NDArray[np.float32],
-    train_indices: np.ndarray[Any, Any],
-    test_indices: np.ndarray[Any, Any],
+    y: Any,  # noqa: ANN401
+    train_indices: list[int],
+    test_indices: list[int],
     cfg: DictConfig,
     scorer: Scorer,
     output_dir: Path,
     cache_args: dict[str, Any],
-) -> tuple[float, float, float]:
+) -> float:
     """Run a single fold of the cross validation.
 
     :param i: The fold number.
@@ -152,7 +151,7 @@ def run_fold(
     score = scorer(y[test_indices], predictions)
     logger.info(f"Score, fold {fold_no}: {score}")
 
-    fold_dir = output_dir / fold_no  # Something can be saved here
+    fold_dir = output_dir / str(fold_no)  # Something can be saved here
     logger.debug(fold_dir)
 
     if wandb.run:

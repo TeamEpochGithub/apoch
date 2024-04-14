@@ -26,26 +26,33 @@ def setup_train_args(
     :param save_model_preds: Whether to save the model predictions
     :return: Dictionary containing arguments
     """
-    train_args = {
-        "x_sys": {
-            "cache_args": cache_args,
-        },
-        "train_sys": {
-            "MainTrainer": {
-                "train_indices": train_indices,
-                "test_indices": test_indices,
-                "save_model": save_model,
-            },
-            # "cache_args": cache_args, # TODO(Jasper): Allow for caching after training in fold
-        },
-        "pred_sys": {},
+    x_sys = {
+        "cache_args": cache_args,
+    }
+
+    main_trainer = {
+        "train_indices": train_indices,
+        "test_indices": test_indices,
+        "save_model": save_model,
     }
 
     if fold > -1:
-        train_args["train_sys"]["MainTrainer"]["fold"] = fold
+        main_trainer["fold"] = fold
+
+    train_sys = {
+        "MainTrainer": main_trainer,
+    }
 
     if save_model_preds:
-        train_args["train_sys"]["cache_args"] = cache_args
+        train_sys["cache_args"] = cache_args
+
+    pred_sys: dict[str, Any] = {}
+
+    train_args = {
+        "x_sys": x_sys,
+        "train_sys": train_sys,
+        "pred_sys": pred_sys,
+    }
 
     if isinstance(pipeline, EnsemblePipeline):
         train_args = {
@@ -61,14 +68,15 @@ def setup_pred_args(pipeline: ModelPipeline | EnsemblePipeline) -> dict[str, Any
     :param pipeline: Pipeline to receive arguments
     :return: Dictionary containing arguments
     """
-    pred_args = {
-        "train_sys": {
-            "MainTrainer": {
-                # "batch_size": 16,
-                # "model_folds": cfg.model_folds,
-            },
-        },
-    }
+    # pred_args = {
+    #     "train_sys": {
+    #         "MainTrainer": {
+    #             # "batch_size": 16,
+    #             # "model_folds": cfg.model_folds,
+    #         },
+    #     },
+    # }
+    pred_args: dict[str, Any] = {}
 
     if isinstance(pipeline, EnsemblePipeline):
         pred_args = {
