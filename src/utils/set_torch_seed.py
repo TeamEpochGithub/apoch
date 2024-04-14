@@ -1,7 +1,7 @@
 """Set seed for reproducibility."""
 import torch
 
-from src.logging_utils.logger import logger
+from src.utils.logger import logger
 
 
 def set_torch_seed(seed: int = 42) -> None:

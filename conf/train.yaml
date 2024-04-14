@@ -1,7 +1,7 @@
 defaults:
   - base_train
   - hydra/logging
-  - model: ??? # Add models or ensembles
+  - model: test # Add models or ensembles
   - wandb: train
 
 ###############

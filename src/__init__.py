@@ -1,1 +1,1 @@
-"""Source code for competitions."""
+"""The source code module."""

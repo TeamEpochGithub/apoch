@@ -65,9 +65,9 @@ def update_ensemble_cfg_dict(
 
 
 def update_model_cfg_test_size(
-    cfg: dict[str | bytes | int | Enum | float | bool, Any] | list[Any] | str | None,
+    cfg: dict[str | bytes | int | float | bool, Any] | list[Any] | str | None,
     test_size: float = -1.0,
-) -> dict[str | bytes | int | Enum | float | bool, Any] | list[Any] | str | None:
+) -> dict[str | bytes | int | float | bool, Any] | list[Any] | str | None:
     """Update the test size in the model config.
 
     :param cfg: The model config.

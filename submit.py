@@ -10,10 +10,10 @@ from hydra.core.config_store import ConfigStore
 from omegaconf import DictConfig
 
 from src.config.submit_config import SubmitConfig
-from src.logging_utils.logger import logger
 from src.setup.setup_data import setup_inference_data
 from src.setup.setup_pipeline import setup_pipeline
 from src.setup.setup_runtime_args import setup_pred_args
+from src.utils.logger import logger
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -29,7 +29,7 @@ cs.store(name="base_submit", node=SubmitConfig)
 # TODO(Epoch): Use SubmitConfig instead of DictConfig
 def run_submit(cfg: DictConfig) -> None:
     """Run the main script for submitting the predictions."""
-    print_section_separator("Q3 Detect Harmful Brain Activity - Submit")
+    print_section_separator("Q? - 'competition' - Submit")
 
     # Set up logging
     import coloredlogs
