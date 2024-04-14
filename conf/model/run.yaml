@@ -9,7 +9,7 @@ y_sys:
 train_sys:
   steps:
     - _target_: src.modules.training.dummy_trainer.DummyTrainer
-      epochs: 30
+      epochs: 20
       patience: 10
       batch_size: 32
       model:
