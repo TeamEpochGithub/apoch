@@ -93,7 +93,10 @@ def run_cv_cfg(cfg: DictConfig) -> None:
     logger.info("Using splitter to split data into train and test sets.")
 
     # Save Predictions
-    oof_predictions = np.zeros((len(y), 1), dtype=np.float64)
+    if len(y.shape) == 1:
+        oof_predictions = np.zeros((y.shape[0], 1), dtype=np.float64)
+    else:
+        oof_predictions = np.zeros(y.shape, dtype=np.float64)
 
     for fold_no, (train_indices, test_indices) in enumerate(instantiate(cfg.splitter).split(splitter_data, y)):
         score, predictions = run_fold(fold_no, X, y, train_indices, test_indices, cfg, scorer, output_dir, cache_args)
