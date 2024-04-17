@@ -92,6 +92,9 @@ def run_cv_cfg(cfg: DictConfig) -> None:
     splitter_data = setup_splitter_data()
     logger.info("Using splitter to split data into train and test sets.")
 
+    if not isinstance(y, np.ndarray):
+        raise TypeError("y should be a numpy array")
+
     # Save Predictions
     if len(y.shape) == 1:
         oof_predictions = np.zeros((y.shape[0], 1), dtype=np.float64)
@@ -163,7 +166,7 @@ def run_fold(
     score = scorer(y[test_indices], predictions)
     logger.info(f"Score, fold {fold_no}: {score}")
 
-    fold_dir = output_dir / str(fold_no)    # Files specific to a run can be saved here
+    fold_dir = output_dir / str(fold_no)  # Files specific to a run can be saved here
     logger.debug(f"Output Directory: {fold_dir}")
 
     if wandb.run:
