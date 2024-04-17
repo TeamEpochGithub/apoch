@@ -31,4 +31,4 @@ class CVConfig:
     wandb: WandBConfig
     splitter: Any
     allow_multiple_instances: bool = False
-    save_folds: bool = False
+    save_folds: bool = True

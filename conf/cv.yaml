@@ -22,3 +22,4 @@ splitter:
   n_splits: 2
   shuffle: false
 allow_multiple_instances: true
+save_folds: true
