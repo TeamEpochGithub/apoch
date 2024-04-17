@@ -106,7 +106,7 @@ def run_cv_cfg(cfg: DictConfig) -> None:
         scores.append(score)
 
         # Save predictions
-        oof_predictions[test_indices] = predictions[test_indices]
+        oof_predictions[test_indices] = predictions
 
     avg_score = np.average(np.array(scores))
     oof_score = scorer(y, oof_predictions)
@@ -163,7 +163,11 @@ def run_fold(
     )
     predictions, _ = model_pipeline.train(X, y, **train_args)
 
+    # If predictions are on 'all' data, only keep the test data
+    if y.shape[0] == predictions.shape[0]:
+        predictions = predictions[test_indices]
     score = scorer(y[test_indices], predictions)
+
     logger.info(f"Score, fold {fold_no}: {score}")
 
     fold_dir = output_dir / str(fold_no)  # Files specific to a run can be saved here
