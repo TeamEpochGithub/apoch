@@ -19,7 +19,7 @@ scorer:
   name: accuracy
 splitter:
   _target_: sklearn.model_selection.KFold
-  n_splits: 2
+  n_splits: 6
   shuffle: false
 allow_multiple_instances: true
 save_folds: true
