@@ -1,0 +1,20 @@
+pipeline:
+  _target_: src.modules.transformation.verbose_transformation_pipeline.VerboseTransformationPipeline
+  _convert_: partial
+  steps:
+    - _target_: src.modules.transformation.eeg.bipolar.BipolarEEG
+      use_full_map: false
+      keep_ekg: false
+    - _target_: src.modules.transformation.clip.Clip
+      lower: -1024
+      upper: 1024
+      eeg: true
+    - _target_: src.modules.transformation.nantozero.NaNToZero
+      eeg: true
+    - _target_: src.modules.transformation.eeg.divide.Divide
+      value: 32
+    - _target_: src.modules.transformation.eeg.butter.ButterFilter
+      lower: 0.5
+      upper: 20
+      order: 2
+    - _target_: src.modules.transformation.eeg.quantize.Quantizer
