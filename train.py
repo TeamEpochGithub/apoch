@@ -80,12 +80,22 @@ def run_train_cfg(cfg: DictConfig) -> None:
 
     # Split indices into train and test
     splitter_data = setup_splitter_data()
-    logger.info("Using splitter to split data into train and test sets.")
-    train_indices, test_indices = instantiate(cfg.splitter).split(splitter_data, y)[0]
-    logger.info(f"Train/Test size: {len(train_indices)}/{len(test_indices)}")
 
+    # For this simple splitter, we only need y.
+    if cfg.test_size == 0:
+        if cfg.splitter.n_splits != 0:
+            raise ValueError("Test size is 0, but n_splits is not 0. Also please set n_splits to 0 if you want to run train full.")
+        logger.info("Training full.")
+        train_indices, test_indices = list(range(len(X))), []  # type: ignore[arg-type]
+        fold = -1
+    else:
+        logger.info("Using splitter to split data into train and test sets.")
+        train_indices, test_indices = next(instantiate(cfg.splitter).split(splitter_data, y))
+        fold = 0
+
+    logger.info(f"Train/Test size: {len(train_indices)}/{len(test_indices)}")
     print_section_separator("Train model pipeline")
-    train_args = setup_train_args(pipeline=model_pipeline, cache_args=cache_args, train_indices=train_indices, test_indices=test_indices, save_model=True, fold=0)
+    train_args = setup_train_args(pipeline=model_pipeline, cache_args=cache_args, train_indices=train_indices, test_indices=test_indices, save_model=True, fold=fold)
     predictions, y_new = model_pipeline.train(X, y, **train_args)
 
     if y is None:
