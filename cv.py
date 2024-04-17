@@ -16,7 +16,7 @@ from omegaconf import DictConfig
 
 from src.config.cv_config import CVConfig
 from src.scoring.scorer import Scorer
-from src.setup.setup_data import setup_splitter_data, setup_train_x_data, setup_train_y_data
+from src.setup.setup_data import setup_train_x_data, setup_train_y_data
 from src.setup.setup_pipeline import setup_pipeline
 from src.setup.setup_runtime_args import setup_train_args
 from src.setup.setup_wandb import setup_wandb
@@ -79,29 +79,25 @@ def run_cv_cfg(cfg: DictConfig) -> None:
 
     X, y = None, None
     if not x_cache_exists:
-        X = setup_train_x_data()
+        X = setup_train_x_data(cfg.data_path)
 
     if not y_cache_exists:
-        y = setup_train_y_data()
+        y = setup_train_y_data(cfg.data_path)
 
     # Instantiate scorer
     scorer = instantiate(cfg.scorer)
     scores: list[float] = []
 
     # Split indices into train and test
-    splitter_data = setup_splitter_data()
+    # splitter_data = setup_splitter_data()
     logger.info("Using splitter to split data into train and test sets.")
 
     if not isinstance(y, np.ndarray):
         raise TypeError("y should be a numpy array")
 
-    # Save Predictions
-    if len(y.shape) == 1:
-        oof_predictions = np.zeros((y.shape[0], 1), dtype=np.float64)
-    else:
-        oof_predictions = np.zeros(y.shape, dtype=np.float64)
+    oof_predictions = np.zeros(y.shape, dtype=np.float64)
 
-    for fold_no, (train_indices, test_indices) in enumerate(instantiate(cfg.splitter).split(splitter_data, y)):
+    for fold_no, (train_indices, test_indices) in enumerate(instantiate(cfg.splitter).split(y)):
         score, predictions = run_fold(fold_no, X, y, train_indices, test_indices, cfg, scorer, output_dir, cache_args)
         scores.append(score)
 

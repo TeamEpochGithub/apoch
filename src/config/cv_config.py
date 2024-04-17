@@ -23,11 +23,12 @@ class CVConfig:
 
     model: Any
     ensemble: Any
-    # raw_data_path: str
-    # raw_target_path: str
+    raw_path: str
+    cache_path: str
+    data_path: str
     processed_path: str
     scorer: Any
     wandb: WandBConfig
     splitter: Any
     allow_multiple_instances: bool = False
-    save_folds: bool = False
+    save_folds: bool = True

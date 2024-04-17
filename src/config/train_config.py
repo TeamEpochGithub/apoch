@@ -16,14 +16,16 @@ class TrainConfig:
     :param processed_path: Path to put processed data.
     :param scorer: Scorer object to be instantiated.
     :param wandb: Whether to log to Weights & Biases and other settings.
-    :param test_size: The size of the test set.
+    :param splitter: Cross validation splitter.
+    :param test_size: Size of the test set.
     :param allow_multiple_instances: Whether to allow multiple instances of training at the same time.
     """
 
     model: Any
     ensemble: Any
-    # raw_data_path: str
-    # raw_target_path: str
+    raw_path: str
+    cache_path: str
+    data_path: str
     processed_path: str
     scorer: Any
     wandb: WandBConfig

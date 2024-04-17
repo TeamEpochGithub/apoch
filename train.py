@@ -12,7 +12,7 @@ from hydra.utils import instantiate
 from omegaconf import DictConfig
 
 from src.config.train_config import TrainConfig
-from src.setup.setup_data import setup_splitter_data, setup_train_x_data, setup_train_y_data
+from src.setup.setup_data import setup_train_x_data, setup_train_y_data
 from src.setup.setup_pipeline import setup_pipeline
 from src.setup.setup_runtime_args import setup_train_args
 from src.setup.setup_wandb import setup_wandb
@@ -73,13 +73,10 @@ def run_train_cfg(cfg: DictConfig) -> None:
 
     X, y = None, None
     if not x_cache_exists:
-        X = setup_train_x_data()
+        X = setup_train_x_data(cfg.data_path)
 
     if not y_cache_exists:
-        y = setup_train_y_data()
-
-    # Split indices into train and test
-    splitter_data = setup_splitter_data()
+        y = setup_train_y_data(cfg.data_path)
 
     # For this simple splitter, we only need y.
     if cfg.test_size == 0:
@@ -90,7 +87,7 @@ def run_train_cfg(cfg: DictConfig) -> None:
         fold = -1
     else:
         logger.info("Using splitter to split data into train and test sets.")
-        train_indices, test_indices = next(instantiate(cfg.splitter).split(splitter_data, y))
+        train_indices, test_indices = next(instantiate(cfg.splitter).split(y))
         fold = 0
 
     logger.info(f"Train/Test size: {len(train_indices)}/{len(test_indices)}")
@@ -104,7 +101,7 @@ def run_train_cfg(cfg: DictConfig) -> None:
     if len(test_indices) > 0:
         print_section_separator("Scoring")
         scorer = instantiate(cfg.scorer)
-        score = scorer(y[test_indices], predictions)
+        score = scorer(y[test_indices], predictions[test_indices])
         logger.info(f"Score: {score}")
 
         if wandb.run:
