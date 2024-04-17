@@ -81,5 +81,5 @@ def update_model_cfg_test_size(
     if isinstance(cfg, dict):
         for model in cfg["train_sys"]["steps"]:
             if model["_target_"] == "src.modules.training.main_trainer.MainTrainer":
-                model["test_split_type"] = test_size
+                model["n_folds"] = test_size
     return cfg
