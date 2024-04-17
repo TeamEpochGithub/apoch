@@ -54,5 +54,4 @@ repos:
           - wandb
           - randomname
           - coloredlogs
-          - dask
         args: [ --disallow-any-generics, --disallow-untyped-defs, --disable-error-code=import-untyped]

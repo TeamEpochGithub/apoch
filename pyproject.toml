@@ -16,13 +16,8 @@ dependencies = [
     # Machine Learning Basics
     "numpy>=1.26.2",
     "pandas>=2.1.4",
-    "scipy>=1.11.4",
     "tqdm>=4.66.1",
-    "polars>=0.19.19",
-    "epochalyst==0.2",
-
-    # Data loading
-    "pyarrow>=6.0.0",
+    "epochalyst==0.3",
 
     # Visualizations
     "seaborn>=0.13.0",
@@ -38,9 +33,6 @@ dependencies = [
     "dash>=2.14.2",
     "dash-bootstrap-components>=1.5.0",
     "dash-bootstrap-templates>=1.1.1",
-
-    # Pretrained Models
-    "segmentation-models-pytorch>=0.3.3",
 
     # pre-commit & MyPy
     "pre-commit>=3.6.0",
@@ -64,9 +56,6 @@ dependencies = [
     "notebook>=7.0.6",
     "jupyter>=1.0.0",
     "ipykernel>=6.27.1",
-
-    # Distribution
-    "distributed>=2024.3.1",
 
 ]
 
