@@ -1,6 +1,7 @@
 """Module for example training block."""
 
-import dask.array as da
+import numpy as np
+import numpy.typing as npt
 
 from src.modules.training.verbose_training_block import VerboseTrainingBlock
 
@@ -8,7 +9,7 @@ from src.modules.training.verbose_training_block import VerboseTrainingBlock
 class ExampleTrainingBlock(VerboseTrainingBlock):
     """An example training block."""
 
-    def train(self, x: da.Array, y: da.Array) -> tuple[da.Array, da.Array]:
+    def train(self, x: npt.NDArray[np.float32], y: npt.NDArray[np.float32]) -> tuple[npt.NDArray[np.float32], npt.NDArray[np.float32]]:
         """Train the model.
 
         :param x: The input data
@@ -18,7 +19,7 @@ class ExampleTrainingBlock(VerboseTrainingBlock):
         # ("Training")
         return x, y
 
-    def predict(self, x: da.Array) -> da.Array:
+    def predict(self, x: npt.NDArray[np.float32]) -> npt.NDArray[np.float32]:
         """Predict using the model.
 
         :param x: The input data
