@@ -6,12 +6,12 @@ from dash import dcc, html
 from dash.dependencies import Input, Output
 
 from dashboard.eda.eda_layout import create_eda_layout
-from dashboard.eda.parquet_visualizer import create_parquet_visualizer
+from dashboard.eda.dummy_time_series_visualizer import create_dummy_visualizer
 
 # Initialize the Dash app
 app = dash.Dash(__name__)
 
-parquet_app, parquet_layout = create_parquet_visualizer(app=app, file_path="data/raw/train_eegs/*")
+parquet_app, parquet_layout = create_dummy_visualizer(app=app, file_path="data/raw/train_eegs/*")
 
 # Define the layout of the dashboard
 app.layout = html.Div(

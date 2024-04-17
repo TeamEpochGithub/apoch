@@ -3,7 +3,7 @@ from typing import Any
 
 from dash import Dash
 
-from dashboard.eda.parquet_visualizer import create_parquet_visualizer
+from dashboard.eda.dummy_time_series_visualizer import create_dummy_visualizer
 
 
 def create_eda_layout(app: Dash) -> tuple[Any, Any]:
@@ -12,4 +12,4 @@ def create_eda_layout(app: Dash) -> tuple[Any, Any]:
     :param app: Dashboard app
     :return: Updated app and layout
     """
-    return create_parquet_visualizer(app, file_path="./data/raw/train_eegs/*")
+    return create_dummy_visualizer(app, file_path="./data/raw/train_eegs/*")
