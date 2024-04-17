@@ -47,12 +47,7 @@ def setup_train_args(
             "cache_args": cache_args,
         },
         "y_sys": {},
-        "train_sys": {
-            "DummyTrainer": {
-                "train_indices": train_indices,
-                "test_indices": test_indices,
-            },
-        },
+        "train_sys": train_sys,
     }
 
     if isinstance(pipeline, EnsemblePipeline):
