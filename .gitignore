@@ -167,6 +167,7 @@ submission/dependencies
 
 outputs
 
-tm
+tm/
+!/tm/.gitkeep
 
 data/processed
