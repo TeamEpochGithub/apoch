@@ -15,7 +15,6 @@ agogos==0.4
     # via epochalyst
 annotated-types==0.7.0
     # via apoch
-    # via epochalyst
 antlr4-python3-runtime==4.9.3
     # via hydra-core
     # via omegaconf
@@ -77,7 +76,7 @@ distlib==0.3.8
     # via virtualenv
 docker-pycreds==0.4.0
     # via wandb
-epochalyst==0.3.7
+epochalyst==0.3.2
     # via apoch
 executing==2.0.1
     # via stack-data
@@ -140,7 +139,6 @@ jinja2==3.1.4
     # via torch
 joblib==1.4.2
     # via agogos
-    # via epochalyst
 json5==0.9.25
     # via jupyterlab-server
 jsonpointer==3.0.0
@@ -229,6 +227,7 @@ notebook-shim==0.2.4
 numpy==2.0.0
     # via apoch
     # via contourpy
+    # via epochalyst
     # via matplotlib
     # via pandas
     # via torchvision
