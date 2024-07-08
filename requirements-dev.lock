@@ -14,6 +14,7 @@ agogos==0.4
     # via epochalyst
 annotated-types==0.7.0
     # via apoch
+    # via epochalyst
 antlr4-python3-runtime==4.9.3
     # via hydra-core
     # via omegaconf
@@ -89,7 +90,7 @@ distlib==0.3.8
     # via virtualenv
 docker-pycreds==0.4.0
     # via wandb
-epochalyst==0.3.1
+epochalyst==4.0
     # via apoch
 exceptiongroup==1.2.1
     # via anyio
@@ -162,6 +163,8 @@ jinja2==3.1.4
     # via torch
 joblib==1.4.2
     # via agogos
+    # via epochalyst
+    # via scikit-learn
 json5==0.9.25
     # via jupyterlab-server
 jsonpointer==3.0.0
@@ -259,10 +262,11 @@ numpy==2.0.0
     # via apoch
     # via contourpy
     # via dash-bootstrap-templates
-    # via epochalyst
     # via matplotlib
     # via pandas
     # via pandas-stubs
+    # via scikit-learn
+    # via scipy
     # via seaborn
     # via torchvision
 nvidia-cublas-cu12==12.1.3.1
@@ -400,6 +404,10 @@ rfc3986-validator==0.1.1
 rpds-py==0.19.0
     # via jsonschema
     # via referencing
+scikit-learn==1.5.1
+    # via apoch
+scipy==1.14.0
+    # via scikit-learn
 seaborn==0.13.2
     # via apoch
 send2trash==1.8.3
@@ -438,6 +446,8 @@ termcolor==2.4.0
 terminado==0.18.1
     # via jupyter-server
     # via jupyter-server-terminals
+threadpoolctl==3.5.0
+    # via scikit-learn
 tinycss2==1.3.0
     # via nbconvert
 tomli==2.0.1
@@ -489,6 +499,7 @@ typing-extensions==4.12.2
     # via apoch
     # via async-lru
     # via dash
+    # via epochalyst
     # via ipython
     # via mypy
     # via torch

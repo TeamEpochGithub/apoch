@@ -15,13 +15,13 @@ cache_path: data/cache
 data_path: data/raw/train_data/dummy.npy
 
 # Do this if you want train full.
-test_size: 0
+test_size: 0.5
 
 scorer:
   _target_: src.scoring.accuracy.Accuracy # Add scorer
   name: accuracy
 splitter:
   _target_: sklearn.model_selection.KFold
-  n_splits: 0 # Set to 0 if you want train full.
+  n_splits: 2 # Set to 0 if you want train full.
   shuffle: false
 allow_multiple_instances: true

@@ -9,6 +9,7 @@ y_sys:
 train_sys:
   steps:
     - _target_: src.modules.training.main_trainer.MainTrainer
+      model_name: "MLP"
       n_folds: 2 # 0 for train full,
       epochs: 20
       patience: 10

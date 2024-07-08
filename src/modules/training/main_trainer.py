@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 
 import wandb
-from epochalyst.pipeline.model.training.torch_trainer import TorchTrainer
+from epochalyst.training import TorchTrainer
 
 from src.modules.logging.logger import Logger
 
@@ -15,5 +15,5 @@ class MainTrainer(TorchTrainer, Logger):
         """Save the model to external storage."""
         if wandb.run:
             model_artifact = wandb.Artifact(self.model_name, type="model")
-            model_artifact.add_file(f"{self._model_directory}/{self.get_hash()}.pt")
+            model_artifact.add_file(f"{self.trained_models_directory}/{self.get_hash()}.pt")
             wandb.log_artifact(model_artifact)
