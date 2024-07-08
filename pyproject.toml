@@ -25,9 +25,9 @@ dependencies = [
     "plotly>=5.18.0",
 
     # PyTorch
-    "torch==2.1.2+cu118",
-    "torchaudio==2.1.2+cu118",
-    "torchvision==0.16.2+cu118",
+    "torch==2.3.1",
+    "torchaudio==2.3.1",
+    "torchvision==0.18.1",
 
     # Dash
     "dash>=2.14.2",
