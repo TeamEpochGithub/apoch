@@ -1,1 +1,6 @@
-./** @TeamEpochGithub/technical-committee
+*.py @TeamEpochGithub/core-maintainers @TeamEpochGithub/technical-committee
+*.md @TeamEpochGithub/core-maintainers @TeamEpochGithub/technical-committee
+*.yaml @TeamEpochGithub/core-maintainers
+*.yml @TeamEpochGithub/core-maintainers
+*.toml @TeamEpochGithub/core-maintainers
+*.txt @TeamEpochGithub/core-maintainers
