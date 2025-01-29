@@ -1,7 +1,7 @@
 defaults:
   - base_submit
   - hydra/logging
-  - model: run # Add models or ensembles
+  - model: ??? # Add models or ensembles
 
 # Use this when uploading to Kaggle
 
@@ -11,10 +11,6 @@ defaults:
 #             #
 ###############
 
-result_path: submission
+result_path: /kaggle/working/
 
 # Local paths
-processed_path: data/processed
-raw_path: data/raw
-cache_path: data/cache
-data_path: data/raw/train_data/dummy.npy

@@ -19,6 +19,7 @@ dependencies = [
     "tqdm>=4.66.1",
     "epochalyst==4.0.0",
     "scikit-learn==1.5.1",
+
     # Visualizations
     "seaborn>=0.13.0",
     "matplotlib>=3.8.2",

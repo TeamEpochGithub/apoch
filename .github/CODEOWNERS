@@ -1,0 +1,6 @@
+*.py @TeamEpochGithub/applications @TeamEpochGithub/technical-committee
+*.md @TeamEpochGithub/applications @TeamEpochGithub/technical-committee
+*.yaml @TeamEpochGithub/applications
+*.yml @TeamEpochGithub/applications
+*.toml @TeamEpochGithub/applications
+*.txt @TeamEpochGithub/applications

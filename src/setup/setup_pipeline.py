@@ -18,7 +18,6 @@ def setup_pipeline(cfg: DictConfig, *, is_train: bool = True) -> ModelPipeline |
     """
     print_section_separator("Instantiating the pipeline")
 
-    test_size = -1.0
     if is_train:
         test_size = cfg.get("splitter", {}).get("n_splits", -1.0)
 

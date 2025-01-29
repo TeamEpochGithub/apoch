@@ -92,10 +92,8 @@ def run_cv_cfg(cfg: DictConfig) -> None:
     # splitter_data = setup_splitter_data()
     logger.info("Using splitter to split data into train and test sets.")
 
-
     if not isinstance(y, np.ndarray):
         raise TypeError("y should be a numpy array")
-
 
     oof_predictions = np.zeros(y.shape, dtype=np.float64)
 
@@ -161,7 +159,11 @@ def run_fold(
     )
     predictions, _ = model_pipeline.train(X, y, **train_args)
 
+    # If predictions are on 'all' data, only keep the test data
+    if y.shape[0] == predictions.shape[0]:
+        predictions = predictions[test_indices]
     score = scorer(y[test_indices], predictions)
+
     logger.info(f"Score, fold {fold_no}: {score}")
 
     fold_dir = output_dir / str(fold_no)  # Files specific to a run can be saved here
