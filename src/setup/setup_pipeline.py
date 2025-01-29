@@ -2,11 +2,11 @@
 from enum import Enum
 from typing import Any
 
-from epochalyst.pipeline.ensemble import EnsemblePipeline
-from epochalyst.pipeline.model.model import ModelPipeline
+from epochalyst.ensemble import EnsemblePipeline
+from epochalyst.model import ModelPipeline
 from hydra.utils import instantiate
 from omegaconf import DictConfig, OmegaConf
-
+from src.utils.logger import print_section_separator
 from src.utils.logger import logger
 
 
@@ -16,7 +16,7 @@ def setup_pipeline(cfg: DictConfig, *, is_train: bool = True) -> ModelPipeline |
     :param pipeline_cfg: The model pipeline config. Root node should be a ModelPipeline
     :param is_train: Whether the pipeline is used for training
     """
-    logger.info("Instantiating the pipeline")
+    print_section_separator("Instantiating the pipeline")
 
     if is_train:
         test_size = cfg.get("splitter", {}).get("n_splits", -1.0)

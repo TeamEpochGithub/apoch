@@ -1,8 +1,8 @@
 """File containing functions related to setting up runtime arguments for pipelines."""
 from typing import Any
 
-from epochalyst.pipeline.ensemble import EnsemblePipeline
-from epochalyst.pipeline.model.model import ModelPipeline
+from epochalyst.ensemble import EnsemblePipeline
+from epochalyst.model import ModelPipeline
 
 
 def setup_train_args(
@@ -32,7 +32,7 @@ def setup_train_args(
 
     main_trainer = {
         "train_indices": train_indices,
-        "test_indices": test_indices,
+        "validation_indices": test_indices,
         "save_model": save_model,
     }
 

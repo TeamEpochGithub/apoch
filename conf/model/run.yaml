@@ -1,0 +1,28 @@
+defaults:
+  - pipeline/default@_here_
+  - _self_
+
+x_sys:
+
+y_sys:
+
+train_sys:
+  steps:
+    - _target_: src.modules.training.main_trainer.MainTrainer
+      model_name: "MLP"
+      n_folds: 2 # 0 for train full,
+      epochs: 20
+      patience: 10
+      batch_size: 32
+      model:
+        _target_: src.modules.training.models.mlp.MLP
+        input_dim: 2
+        output_dim: 1
+      criterion:
+        _target_: torch.nn.BCELoss
+      optimizer:
+        _target_: functools.partial
+        _args_:
+          - _target_: hydra.utils.get_class
+            path: torch.optim.AdamW
+        lr: 1e-3

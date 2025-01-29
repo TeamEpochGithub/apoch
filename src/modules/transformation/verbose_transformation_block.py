@@ -1,6 +1,6 @@
 """A verbose transformation block that logs to the terminal and to W&B."""
 
-from epochalyst.pipeline.model.transformation.transformation_block import TransformationBlock
+from epochalyst.transformation.transformation_block import TransformationBlock
 
 from src.modules.logging.logger import Logger
 

@@ -10,10 +10,18 @@ defaults:
 #             #
 ###############
 processed_path: data/processed
+raw_path: data/raw
+cache_path: data/cache
+data_path: data/raw/train_data/dummy.npy
+
+# Do this if you want train full.
+test_size: 0.5
 
 scorer:
   _target_: ??? # Add scorer
 splitter:
-  _target_: ??? # Add splitter
-  n_splits: 10
+  _target_: sklearn.model_selection.KFold
+  n_splits: 2 # Set to 0 if you want train full.
+  shuffle: false
+
 allow_multiple_instances: true

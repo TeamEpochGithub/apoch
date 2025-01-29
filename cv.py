@@ -9,7 +9,7 @@ import hydra
 import numpy as np
 import randomname
 import wandb
-from epochalyst.logging.section_separator import print_section_separator
+from src.utils.logger import print_section_separator
 from hydra.core.config_store import ConfigStore
 from hydra.utils import instantiate
 from omegaconf import DictConfig
