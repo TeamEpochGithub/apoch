@@ -1,4 +1,4 @@
-_target_: epochalyst.model.ModelPipeline
+_target_: epochlib.model.ModelPipeline
 _convert_: partial
 
 x_sys:

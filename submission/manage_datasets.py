@@ -3,7 +3,7 @@ import os
 import shutil
 from pathlib import Path
 
-from epochalyst.logging.section_separator import print_section_separator
+from epochlib.logging.section_separator import print_section_separator
 
 DEPENDENCIES_SAVE_PATH = Path('dependencies')
 SOURCE_CODE_SAVE_PATH = Path('source-code')

@@ -1,8 +1,10 @@
 """File containing functions related to setting up runtime arguments for pipelines."""
 from typing import Any
 
-from epochalyst.ensemble import EnsemblePipeline
-from epochalyst.model import ModelPipeline
+from epochlib.ensemble import EnsemblePipeline
+from epochlib.model import ModelPipeline
+
+from src.utils.logger import logger
 
 
 def setup_train_args(
@@ -59,7 +61,8 @@ def setup_train_args(
             "ModelPipeline": train_args,
         }
 
-    raise NotImplementedError("setup_train_args is competition specific")
+    logger.info("This method [setup_train_args] has not been changed yet, remove log statement when implemented")
+    return train_args
 
 
 def setup_pred_args(pipeline: ModelPipeline | EnsemblePipeline) -> dict[str, Any]:

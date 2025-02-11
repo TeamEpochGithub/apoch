@@ -1,7 +1,7 @@
 import os
 
 import wandb
-from epochalyst.logging.section_separator import print_section_separator
+from epochlib.logging.section_separator import print_section_separator
 from omegaconf import OmegaConf
 
 

@@ -2,7 +2,7 @@
 from typing import Any
 
 import wandb
-from epochalyst.logging import Logger as _Logger
+from epochlib.logging import Logger as _Logger
 
 from src.utils.logger import logger
 

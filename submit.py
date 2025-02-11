@@ -5,7 +5,6 @@ from pathlib import Path
 
 import hydra
 import pandas as pd
-from src.utils.logger import print_section_separator
 from hydra.core.config_store import ConfigStore
 from omegaconf import DictConfig
 
@@ -13,7 +12,7 @@ from src.config.submit_config import SubmitConfig
 from src.setup.setup_data import setup_inference_data
 from src.setup.setup_pipeline import setup_pipeline
 from src.setup.setup_runtime_args import setup_pred_args
-from src.utils.logger import logger
+from src.utils.logger import logger, print_section_separator
 
 warnings.filterwarnings("ignore", category=UserWarning)
 

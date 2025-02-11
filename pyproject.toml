@@ -17,9 +17,7 @@ dependencies = [
     "numpy>=1.26.2",
     "pandas>=2.1.4",
     "tqdm>=4.66.1",
-    "epochalyst==4.0.0",
     "scikit-learn==1.5.1",
-
     # Visualizations
     "seaborn>=0.13.0",
     "matplotlib>=3.8.2",
@@ -51,6 +49,7 @@ dependencies = [
     "jupyter>=1.0.0",
     "ipykernel>=6.27.1",
     "scikit-learn>=1.5.1",
+    "epochlib>=5.0.0",
 ]
 
 

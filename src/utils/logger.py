@@ -23,6 +23,7 @@ def log_exception(exc_type: type[BaseException], exc_value: BaseException, exc_t
 
     logger.error("A wild %s appeared!", exc_type.__name__, exc_info=(exc_type, exc_value, exc_traceback))
 
+
 def print_section_separator(title: str, spacing: int = 2) -> None:
     """Print a section separator.
 

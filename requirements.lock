@@ -10,11 +10,9 @@
 #   universal: false
 
 -e file:.
-agogos==0.4
-    # via epochalyst
 annotated-types==0.7.0
     # via apoch
-    # via epochalyst
+    # via epochlib
 antlr4-python3-runtime==4.9.3
     # via hydra-core
     # via omegaconf
@@ -90,7 +88,7 @@ distlib==0.3.8
     # via virtualenv
 docker-pycreds==0.4.0
     # via wandb
-epochalyst==4.0
+epochlib==5.0.0
     # via apoch
 exceptiongroup==1.2.1
     # via anyio
@@ -162,8 +160,7 @@ jinja2==3.1.4
     # via nbconvert
     # via torch
 joblib==1.4.2
-    # via agogos
-    # via epochalyst
+    # via epochlib
     # via scikit-learn
 json5==0.9.25
     # via jupyterlab-server
@@ -262,6 +259,7 @@ numpy==2.0.0
     # via apoch
     # via contourpy
     # via dash-bootstrap-templates
+    # via epochlib
     # via matplotlib
     # via pandas
     # via pandas-stubs
@@ -455,7 +453,7 @@ tomli==2.0.1
     # via mypy
 torch==2.3.1
     # via apoch
-    # via epochalyst
+    # via epochlib
     # via torchaudio
     # via torchvision
 torchaudio==2.3.1
@@ -499,7 +497,7 @@ typing-extensions==4.12.2
     # via apoch
     # via async-lru
     # via dash
-    # via epochalyst
+    # via epochlib
     # via ipython
     # via mypy
     # via torch
