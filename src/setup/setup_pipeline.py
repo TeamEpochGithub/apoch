@@ -6,8 +6,8 @@ from epochalyst.ensemble import EnsemblePipeline
 from epochalyst.model import ModelPipeline
 from hydra.utils import instantiate
 from omegaconf import DictConfig, OmegaConf
-from src.utils.logger import print_section_separator
-from src.utils.logger import logger
+
+from src.utils.logger import logger, print_section_separator
 
 
 def setup_pipeline(cfg: DictConfig, *, is_train: bool = True) -> ModelPipeline | EnsemblePipeline:

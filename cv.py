@@ -9,7 +9,6 @@ import hydra
 import numpy as np
 import randomname
 import wandb
-from src.utils.logger import print_section_separator
 from hydra.core.config_store import ConfigStore
 from hydra.utils import instantiate
 from omegaconf import DictConfig
@@ -21,7 +20,7 @@ from src.setup.setup_pipeline import setup_pipeline
 from src.setup.setup_runtime_args import setup_train_args
 from src.setup.setup_wandb import setup_wandb
 from src.utils.lock import Lock
-from src.utils.logger import logger
+from src.utils.logger import logger, print_section_separator
 from src.utils.set_torch_seed import set_torch_seed
 
 warnings.filterwarnings("ignore", category=UserWarning)
