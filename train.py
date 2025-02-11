@@ -70,12 +70,12 @@ def run_train_cfg(cfg: DictConfig) -> None:
     x_cache_exists = model_pipeline.get_x_cache_exists(cache_args)
     y_cache_exists = model_pipeline.get_y_cache_exists(cache_args)
 
-    X, y = None, None
-    if not x_cache_exists:
-        X = setup_train_x_data(cfg.data_path)
+    # X, y = None, None
+    # if not x_cache_exists:
+    X = setup_train_x_data(Path(cfg.data_path))
 
-    if not y_cache_exists:
-        y = setup_train_y_data(cfg.data_path)
+    # if not y_cache_exists:
+    y = setup_train_y_data(Path(cfg.data_path))
 
     # For this simple splitter, we only need y.
     if cfg.test_size == 0:
