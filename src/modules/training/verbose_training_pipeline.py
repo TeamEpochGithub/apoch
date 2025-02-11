@@ -1,5 +1,5 @@
 """A verbose training pipeline that logs to the terminal and to W&B."""
-from epochalyst.training import TrainingPipeline
+from epochlib.training import TrainingPipeline
 
 from src.modules.logging.logger import Logger
 

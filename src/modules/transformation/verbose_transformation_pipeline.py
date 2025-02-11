@@ -1,5 +1,5 @@
 """Module containing the VerboseTransformationPipeline class."""
-from epochalyst.transformation.transformation import TransformationPipeline
+from epochlib.transformation.transformation import TransformationPipeline
 
 from src.modules.logging.logger import Logger
 

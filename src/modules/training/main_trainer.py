@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 
 import wandb
-from epochalyst.training import TorchTrainer
+from epochlib.training import TorchTrainer
 
 from src.modules.logging.logger import Logger
 

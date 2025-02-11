@@ -1,5 +1,5 @@
 """Module for a verbose training block that logs to the terminal and to W&B."""
-from epochalyst.training.training_block import TrainingBlock
+from epochlib.training.training_block import TrainingBlock
 
 from src.modules.logging.logger import Logger
 

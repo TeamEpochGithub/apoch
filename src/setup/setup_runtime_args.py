@@ -1,8 +1,8 @@
 """File containing functions related to setting up runtime arguments for pipelines."""
 from typing import Any
 
-from epochalyst.ensemble import EnsemblePipeline
-from epochalyst.model import ModelPipeline
+from epochlib.ensemble import EnsemblePipeline
+from epochlib.model import ModelPipeline
 
 
 def setup_train_args(

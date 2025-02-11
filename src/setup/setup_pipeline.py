@@ -2,8 +2,8 @@
 from enum import Enum
 from typing import Any
 
-from epochalyst.ensemble import EnsemblePipeline
-from epochalyst.model import ModelPipeline
+from epochlib.ensemble import EnsemblePipeline
+from epochlib.model import ModelPipeline
 from hydra.utils import instantiate
 from omegaconf import DictConfig, OmegaConf
 
