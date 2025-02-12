@@ -1,7 +1,7 @@
 defaults:
   - base_train
   - hydra/logging
-  - model: run # Add models or ensembles
+  - model: mlp # Add models or ensembles
   - wandb: train
 
 ###############
@@ -14,15 +14,13 @@ raw_path: data/raw
 cache_path: data/cache
 data_path: data/raw/train_data/iris.csv
 
-# Do this if you want train full.
-test_size: 0.5
-
-scorer:
-  _target_: src.scoring.accuracy.Accuracy
-  name: accuracy
 splitter:
   _target_: sklearn.model_selection.KFold
   n_splits: 2 # Set to 0 if you want train full.
   shuffle: false
+
+scorer:
+  _target_: src.scoring.accuracy.Accuracy
+  name: accuracy
 
 allow_multiple_instances: true
